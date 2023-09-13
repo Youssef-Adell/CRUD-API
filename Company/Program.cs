@@ -9,7 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 LogManager.Setup().LoadConfigurationFromFile();
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+                .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
 builder.Services.ConfigureCors();
 builder.Services.ConfigureIISIntegration();
 builder.Services.ConfigureLoggerService();
