@@ -1,6 +1,6 @@
 using Core.IRepositories;
 using Core.IServices;
-using Core.Entities;
+using Core.DTOs;
 
 namespace Core.Services;
 
@@ -15,12 +15,16 @@ internal sealed class CompanyService : ICompanyService
         _logger = logger;
     }
 
-    public IEnumerable<Company> GetAllCompanies(bool trackChanges)
+    public IEnumerable<CompanyDto> GetAllCompanies(bool trackChanges)
     {
         try
         {
             var compaines = _repository.Company.GetAllCompanies(trackChanges);
-            return compaines;
+
+            var compainesDto = compaines.Select(c =>
+                                new CompanyDto(c.Id, c.Name, string.Join(' ', c.Address, c.Country)));
+
+            return compainesDto;
         }
         catch (Exception ex)
         {

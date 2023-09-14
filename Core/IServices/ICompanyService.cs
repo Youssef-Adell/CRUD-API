@@ -1,8 +1,8 @@
-using Core.Entities;
+using Core.DTOs;
 
 namespace Core.IServices;
 
 public interface ICompanyService
 {
-    IEnumerable<Company> GetAllCompanies(bool trackChanges);
+    IEnumerable<CompanyDto> GetAllCompanies(bool trackChanges);
 }
