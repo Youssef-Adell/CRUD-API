@@ -3,7 +3,7 @@ using Core.IServices;
 
 namespace Core.Services;
 
-public class EmployeeService : IEmployeeService
+internal sealed class EmployeeService : IEmployeeService
 {
     private readonly IRepositoryManager _repository;
     private readonly ILoggerService _logger;
