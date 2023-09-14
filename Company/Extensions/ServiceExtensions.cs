@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using Contracts;
-using LoggerService;
-using Repository;
-using Service;
-using Service.Contracts;
+using Core.IRepositories;
+using Core.IServices;
+using Core.Services;
+using Infrastructure.Logger;
+using Infrastructure.Data;
+using Infrastructure.Data.Repositories;
 
 namespace Company.Extensions;
 
@@ -34,7 +35,7 @@ public static class ServiceExtensions
 
     public static void ConfigureLoggerService(this IServiceCollection services)
     {
-        services.AddSingleton<ILoggerManager, LoggerManager>();
+        services.AddSingleton<ILoggerService, NlogLoggerService>();
     }
 
     public static void ConfigureRepositoryManager(this IServiceCollection services)
@@ -48,7 +49,7 @@ public static class ServiceExtensions
 
     public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<RepositoryContext>(optionsbuilder => optionsbuilder.UseSqlServer(configuration.GetConnectionString("SqlConnection")));
-        // services.AddSqlServer<RepositoryContext>(configuration.GetConnectionString("SqlConnection"));
+        services.AddDbContext<AppDbContext>(optionsbuilder => optionsbuilder.UseSqlServer(configuration.GetConnectionString("SqlConnection")));
+        // services.AddSqlServer<AppDbContext>(configuration.GetConnectionString("SqlConnection"));
     }
 }
