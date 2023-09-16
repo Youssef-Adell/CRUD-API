@@ -39,12 +39,13 @@ public static class ServiceExtensions
     {
         LogManager.Setup().LoadConfigurationFromFile();
         services.AddSingleton<NLog.ILogger>(LogManager.GetCurrentClassLogger());
-        services.AddSingleton<ILoggerService, NlogLoggerService>();
+        services.AddSingleton<ILoggerService, NlogService>();
     }
 
-    public static void ConfigurareMapperService(this IServiceCollection services)
+    public static void ConfigureMapperService(this IServiceCollection services)
     {
         services.AddAutoMapper(typeof(MappingProfile));
+        services.AddSingleton<IMapperService, AutoMapperService>();
     }
 
     public static void ConfigureRepositoryManager(this IServiceCollection services)
