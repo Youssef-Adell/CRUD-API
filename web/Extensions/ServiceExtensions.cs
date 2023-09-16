@@ -5,6 +5,8 @@ using Core.Services;
 using Infrastructure.Logger;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
+using NLog;
+using Infrastructure.Mapper;
 
 namespace Company.Extensions;
 
@@ -35,7 +37,14 @@ public static class ServiceExtensions
 
     public static void ConfigureLoggerService(this IServiceCollection services)
     {
+        LogManager.Setup().LoadConfigurationFromFile();
+        services.AddSingleton<NLog.ILogger>(LogManager.GetCurrentClassLogger());
         services.AddSingleton<ILoggerService, NlogLoggerService>();
+    }
+
+    public static void ConfigurareMapperService(this IServiceCollection services)
+    {
+        services.AddAutoMapper(typeof(MappingProfile));
     }
 
     public static void ConfigureRepositoryManager(this IServiceCollection services)

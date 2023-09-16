@@ -1,11 +1,9 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company", "Company\Company.csproj", "{09F926C7-CA4C-487B-9A4E-701B62F2B868}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "Presentation\Presentation.csproj", "{AFF88730-1F29-41BC-A31B-49554CF4A6CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{09F926C7-CA4C-487B-9A4E-701B62F2B868}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{FCF7D844-5195-4224-BFCC-03017F31009F}"
 EndProject
@@ -36,18 +34,6 @@ Global
 		{09F926C7-CA4C-487B-9A4E-701B62F2B868}.Release|x64.Build.0 = Release|Any CPU
 		{09F926C7-CA4C-487B-9A4E-701B62F2B868}.Release|x86.ActiveCfg = Release|Any CPU
 		{09F926C7-CA4C-487B-9A4E-701B62F2B868}.Release|x86.Build.0 = Release|Any CPU
-		{AFF88730-1F29-41BC-A31B-49554CF4A6CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AFF88730-1F29-41BC-A31B-49554CF4A6CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AFF88730-1F29-41BC-A31B-49554CF4A6CB}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{AFF88730-1F29-41BC-A31B-49554CF4A6CB}.Debug|x64.Build.0 = Debug|Any CPU
-		{AFF88730-1F29-41BC-A31B-49554CF4A6CB}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{AFF88730-1F29-41BC-A31B-49554CF4A6CB}.Debug|x86.Build.0 = Debug|Any CPU
-		{AFF88730-1F29-41BC-A31B-49554CF4A6CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AFF88730-1F29-41BC-A31B-49554CF4A6CB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AFF88730-1F29-41BC-A31B-49554CF4A6CB}.Release|x64.ActiveCfg = Release|Any CPU
-		{AFF88730-1F29-41BC-A31B-49554CF4A6CB}.Release|x64.Build.0 = Release|Any CPU
-		{AFF88730-1F29-41BC-A31B-49554CF4A6CB}.Release|x86.ActiveCfg = Release|Any CPU
-		{AFF88730-1F29-41BC-A31B-49554CF4A6CB}.Release|x86.Build.0 = Release|Any CPU
 		{FCF7D844-5195-4224-BFCC-03017F31009F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FCF7D844-5195-4224-BFCC-03017F31009F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCF7D844-5195-4224-BFCC-03017F31009F}.Debug|x64.ActiveCfg = Debug|Any CPU
