@@ -1,13 +1,13 @@
 using Core.IRepositories;
 
 namespace Infrastructure.Data.Repositories;
-public class RepositoryManager : IRepositoryManager
+public class EFRepositoryManager : IRepositoryManager
 {
     private readonly AppDbContext _context;
     private readonly Lazy<CompanyRepository> _companyRepository;
     private readonly Lazy<EmployeeRepository> _EmployeeRepository;
 
-    public RepositoryManager(AppDbContext context)
+    public EFRepositoryManager(AppDbContext context)
     {
         _context = context;
         _companyRepository = new Lazy<CompanyRepository>(() => new CompanyRepository(context));
