@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using Core.Interfaces.IServices;
 
@@ -16,5 +17,12 @@ public class CompaniesController : ControllerBase
     {
         var companies = _service.CompanyService.GetAllCompanies(trackChanges: false);
         return Ok(companies);
+    }
+
+    [HttpGet("{id:Guid}")]
+    public IActionResult GetCompany(Guid id)
+    {
+        var company = _service.CompanyService.GetCompany(id, trackChanges: false);
+        return Ok(company);
     }
 }
