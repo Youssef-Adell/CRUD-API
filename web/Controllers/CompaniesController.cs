@@ -14,10 +14,7 @@ public class CompaniesController : ControllerBase
     [HttpGet]
     public IActionResult GetAllCompanies()
     {
-
-        throw new Exception();
         var companies = _service.CompanyService.GetAllCompanies(trackChanges: false);
         return Ok(companies);
-
     }
 }
