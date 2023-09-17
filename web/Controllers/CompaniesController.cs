@@ -1,8 +1,7 @@
-using Core.IServices;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Core.IServices;
 
-namespace Presentation.Controllers;
+namespace Web.Controllers;
 
 [ApiController]
 [Route("api/Companies")]
@@ -15,14 +14,10 @@ public class CompaniesController : ControllerBase
     [HttpGet]
     public IActionResult GetAllCompanies()
     {
-        try
-        {
-            var companies = _service.CompanyService.GetAllCompanies(trackChanges: false);
-            return Ok(companies);
-        }
-        catch
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error");
-        }
+
+        throw new Exception();
+        var companies = _service.CompanyService.GetAllCompanies(trackChanges: false);
+        return Ok(companies);
+
     }
 }
