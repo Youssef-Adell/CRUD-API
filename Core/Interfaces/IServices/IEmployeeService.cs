@@ -1,4 +1,4 @@
-namespace Core.IServices;
+namespace Core.Interfaces.IServices;
 
 public interface IEmployeeService
 {

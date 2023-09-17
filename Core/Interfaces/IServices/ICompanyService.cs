@@ -1,6 +1,6 @@
 using Core.DTOs;
 
-namespace Core.IServices;
+namespace Core.Interfaces.IServices;
 
 public interface ICompanyService
 {

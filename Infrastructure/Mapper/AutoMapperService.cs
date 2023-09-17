@@ -1,5 +1,5 @@
 using AutoMapper;
-using Core.IServices;
+using Core.Interfaces.IServices;
 
 namespace Infrastructure.Mapper;
 

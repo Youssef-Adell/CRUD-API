@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using Core.IRepositories;
+using Core.Interfaces.IRepositories;
 
 namespace Infrastructure.Data.Repositories;
 public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class

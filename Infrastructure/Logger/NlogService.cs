@@ -1,4 +1,4 @@
-using Core.IServices;
+using Core.Interfaces.IServices;
 using NLog;
 
 namespace Infrastructure.Logger;

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Core.IRepositories;
-using Core.IServices;
+using Core.Interfaces.IRepositories;
+using Core.Interfaces.IServices;
 using Core.Services;
 using Infrastructure.Logger;
 using Infrastructure.Data;

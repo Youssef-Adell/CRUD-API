@@ -1,4 +1,4 @@
-using Core.IRepositories;
+using Core.Interfaces.IRepositories;
 
 namespace Infrastructure.Data.Repositories;
 public class EFRepositoryManager : IRepositoryManager

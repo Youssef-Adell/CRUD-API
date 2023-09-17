@@ -1,5 +1,5 @@
-using Core.IRepositories;
-using Core.IServices;
+using Core.Interfaces.IRepositories;
+using Core.Interfaces.IServices;
 using Core.DTOs;
 
 namespace Core.Services;

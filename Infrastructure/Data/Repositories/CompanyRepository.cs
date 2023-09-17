@@ -1,5 +1,5 @@
 using Core.Entities;
-using Core.IRepositories;
+using Core.Interfaces.IRepositories;
 
 namespace Infrastructure.Data.Repositories;
 

@@ -1,5 +1,5 @@
 using Core.Entities;
-namespace Core.IRepositories;
+namespace Core.Interfaces.IRepositories;
 
 public interface ICompanyRepository
 {

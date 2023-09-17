@@ -1,5 +1,5 @@
 using Core.Entities.ErrorModel;
-using Core.IServices;
+using Core.Interfaces.IServices;
 using Microsoft.AspNetCore.Diagnostics;
 
 namespace Web.Extensions;

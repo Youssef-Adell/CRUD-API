@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.HttpOverrides;
 using Web.Extensions;
-using Core.IServices;
+using Core.Interfaces.IServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
