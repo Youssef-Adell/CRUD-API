@@ -8,7 +8,7 @@ using Infrastructure.Data.Repositories;
 using Infrastructure.Mapper;
 using NLog;
 
-namespace Company.Extensions;
+namespace Web.Extensions;
 
 public static class ServiceExtensions
 {
