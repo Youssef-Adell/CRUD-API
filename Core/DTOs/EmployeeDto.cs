@@ -1,3 +1,3 @@
 namespace Core.DTOs;
 
-public record EmployeeDto(string Name, int Age, string Position);
+public record EmployeeDto(Guid Id, string Name, int Age, string Position);
