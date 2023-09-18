@@ -13,8 +13,8 @@ builder.Services.AddApplicationServices();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-var logger = app.Services.GetRequiredService<ILoggerService>();
-app.ConfigureExceptionHandlerMiddleware(logger);
+// var logger = app.Services.GetRequiredService<ILoggerService>();
+// app.ConfigureExceptionHandlerMiddleware(logger);
 
 if (app.Environment.IsProduction())
     app.UseHsts();

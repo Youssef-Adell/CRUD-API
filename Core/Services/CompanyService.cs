@@ -1,6 +1,7 @@
 using Core.Interfaces.IRepositories;
 using Core.Interfaces.IServices;
 using Core.DTOs;
+using Core.Entities.Exceptions;
 
 namespace Core.Services;
 
@@ -30,6 +31,9 @@ internal sealed class CompanyService : ICompanyService
     public CompanyDto GetCompany(Guid companyId, bool trackChanges)
     {
         var company = _repository.Company.GetCompany(companyId, trackChanges);
+
+        if (company is null)
+            throw new CompanyNotFoundException(companyId);
 
         var companyDto = _mapper.Map<CompanyDto>(company);
 

@@ -1,4 +1,5 @@
 using Core.Entities.ErrorModel;
+using Core.Entities.Exceptions;
 using Core.Interfaces.IServices;
 using Microsoft.AspNetCore.Diagnostics;
 
@@ -10,11 +11,13 @@ public static class MiddlewareExtensions
     {
         app.UseExceptionHandler((altPipeline) =>
         {
-            // add middleware that builds a response to return it to the exceptionHandler middleware which will return it to the client
+            /*
+            Add middleware that builds a response (based on the type of thrown exception)
+            to return it to the exceptionHandler middleware which will return it to the client.
+            */
             altPipeline.Run(async (context) =>
             {
-                // Response Headers
-                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                // Response Header
                 context.Response.ContentType = "application/json";
 
                 var errorFeature = context.Features.Get<IExceptionHandlerFeature>();
@@ -22,11 +25,19 @@ public static class MiddlewareExtensions
                 if (errorFeature != null)
                 {
                     logger.LogError($"Something went wrong: {errorFeature.Error}");
+
+                    // Response Header
+                    context.Response.StatusCode = errorFeature.Error switch
+                    {
+                        NotFoundException => StatusCodes.Status404NotFound,
+                        _ => StatusCodes.Status500InternalServerError
+                    };
+
                     // Response Body
                     await context.Response.WriteAsync(new ErrorDetails()
                     {
                         StatusCode = context.Response.StatusCode,
-                        Message = "Internal Server Error."
+                        Message = errorFeature.Error.Message
                     }.ToString()
                     );
                 }
