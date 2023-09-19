@@ -9,7 +9,7 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         CreateMap<Company, CompanyDto>()
-            .ForCtorParam("FullAddress",
+            .ForMember(dst => dst.FullAddress,
                         (opt) => opt.MapFrom(src => string.Join(" ", src.Address, src.Country)));
 
         CreateMap<Employee, EmployeeDto>();
