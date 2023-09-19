@@ -15,7 +15,9 @@ public static class ServiceExtensions
     public static void AddWebServices(this IServiceCollection services)
     {
         // Controllers
-        services.AddControllers();
+        services.AddControllers(config =>
+            config.RespectBrowserAcceptHeader = true
+        ).AddXmlDataContractSerializerFormatters();
 
         // Cors
         services.AddCors(options =>
