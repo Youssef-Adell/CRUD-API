@@ -16,7 +16,10 @@ public static class ServiceExtensions
     {
         // Controllers
         services.AddControllers(config =>
-            config.RespectBrowserAcceptHeader = true
+        {
+            config.RespectBrowserAcceptHeader = true;
+            config.ReturnHttpNotAcceptable = true;
+        }
         ).AddXmlDataContractSerializerFormatters();
 
         // Cors
