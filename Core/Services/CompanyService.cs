@@ -2,6 +2,7 @@ using Core.Interfaces.IRepositories;
 using Core.Interfaces.IServices;
 using Core.DTOs;
 using Core.Entities.Exceptions;
+using Core.Entities;
 
 namespace Core.Services;
 
@@ -39,4 +40,18 @@ internal sealed class CompanyService : ICompanyService
 
         return companyDto;
     }
+
+    public CompanyDto CreateCompany(CompanyForCreationDto companyToAdd)
+    {
+        Company companyEntity = _mapper.Map<Company>(companyToAdd);
+
+        _repository.Company.CreateCompany(companyEntity);
+        _repository.Save();
+
+        CompanyDto companyToReturn = _mapper.Map<CompanyDto>(companyEntity);
+
+        return companyToReturn;
+    }
+
+
 }

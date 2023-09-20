@@ -1,6 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 using Core.Interfaces.IServices;
+using Core.DTOs;
 
 namespace Web.Controllers;
 
@@ -19,10 +20,21 @@ public class CompaniesController : ControllerBase
         return Ok(companies);
     }
 
-    [HttpGet("{id:Guid}")]
+    [HttpGet("{id:Guid}", Name = "CompanyById")]
     public IActionResult GetCompany(Guid id)
     {
         var company = _service.CompanyService.GetCompany(id, trackChanges: false);
         return Ok(company);
+    }
+
+    [HttpPost]
+    public IActionResult CreateCompany([FromBody] CompanyForCreationDto company)
+    {
+        if (company == null)
+            return BadRequest("CompanyForCreationDto object is null");
+
+        CompanyDto companyToReturn = _service.CompanyService.CreateCompany(company);
+
+        return CreatedAtRoute("CompanyById", new { id = companyToReturn.Id }, companyToReturn);
     }
 }

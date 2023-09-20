@@ -13,5 +13,8 @@ public class MappingProfile : Profile
                         (opt) => opt.MapFrom(src => string.Join(" ", src.Address, src.Country)));
 
         CreateMap<Employee, EmployeeDto>();
+
+        CreateMap<Company, CompanyForCreationDto>()
+        .ReverseMap();
     }
 }
