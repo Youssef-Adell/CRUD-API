@@ -7,6 +7,7 @@ using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
 using Infrastructure.Mapper;
 using NLog;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Extensions;
 
@@ -14,6 +15,10 @@ public static class ServiceExtensions
 {
     public static void AddWebServices(this IServiceCollection services)
     {
+        services.Configure<ApiBehaviorOptions>(config =>
+            config.SuppressModelStateInvalidFilter = true
+        );
+
         // Controllers
         services.AddControllers(config =>
         {
