@@ -1,3 +1,4 @@
+using Core.DTOs;
 using Core.Interfaces.IServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,11 +22,26 @@ public class EmployeesController : ControllerBase
         return Ok(employees);
     }
 
-    [HttpGet("{id:Guid}")]
+    [HttpGet("{id:Guid}", Name = "GetEmployeeForCompany")]
     public IActionResult GetEmployeeForCompany(Guid companyId, Guid id)
     {
         var employee = _service.EmployeeService.GetEmployee(companyId, id, trackChanges: false);
 
         return Ok(employee);
+    }
+
+
+    [HttpPost]
+    public IActionResult CreateEmployeeForCompany(Guid companyId, [FromBody] EmployeeForCreationDto employee)
+    {
+        //check if not null
+        if (employee is null)
+            return BadRequest("EmployeeForCreationDto object is null");
+
+        //call service 
+        EmployeeDto createdEmployee = _service.EmployeeService.CreateEmployeeForCompany(companyId, employee);
+
+        //return created resource and its location
+        return CreatedAtRoute("GetEmployeeForCompany", new { companyId = companyId, id = createdEmployee.Id }, createdEmployee);
     }
 }

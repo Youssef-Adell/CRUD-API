@@ -1,4 +1,5 @@
 using Core.DTOs;
+using Core.Entities;
 using Core.Entities.Exceptions;
 using Core.Interfaces.IRepositories;
 using Core.Interfaces.IServices;
@@ -17,7 +18,6 @@ internal sealed class EmployeeService : IEmployeeService
         _logger = logger;
         _mapper = mapper;
     }
-
 
 
     public IEnumerable<EmployeeDto> GetEmployees(Guid companyId, bool trackChanges)
@@ -50,4 +50,27 @@ internal sealed class EmployeeService : IEmployeeService
 
         return employeeDto;
     }
+
+    public EmployeeDto CreateEmployeeForCompany(Guid companyId, EmployeeForCreationDto employeeToAdd, bool trackChanges = false)
+    {
+
+        //check if the company exist or not befoe add employee to it
+        Company company = _repository.Company.GetCompany(companyId, trackChanges);
+
+        if (company is null)
+            throw new CompanyNotFoundException(companyId);
+
+        //map employeeForCreationDto to employee Entity
+        Employee employeeEntity = _mapper.Map<Employee>(employeeToAdd);
+
+        //add employeeEntity to database
+        _repository.Employee.CreateEmployeeForCompany(companyId, employeeEntity);
+        _repository.Save();
+
+        //map employeeEntity to employeeDto to return it
+        EmployeeDto employeeToReturn = _mapper.Map<EmployeeDto>(employeeEntity);
+
+        return employeeToReturn;
+    }
+
 }
