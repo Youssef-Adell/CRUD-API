@@ -70,4 +70,13 @@ internal sealed class CompanyService : ICompanyService
 
         return (companyCollectionToReturn, ids);
     }
+    public IEnumerable<CompanyDto> GetCompanyCollection(IEnumerable<Guid> ids, bool trackChanges = false)
+    {
+        IEnumerable<Company> companyCollection = _repository.Company.GetCompanyCollection(ids, trackChanges);
+
+        IEnumerable<CompanyDto> companyCollectionToReturn = _mapper.Map<IEnumerable<CompanyDto>>(companyCollection);
+
+        return companyCollectionToReturn;
+    }
+
 }

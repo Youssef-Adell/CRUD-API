@@ -42,12 +42,9 @@ public class CompaniesController : ControllerBase
     [HttpGet("Collection/{ids}", Name = "GetCompanyCollectionByIds")]
     public IActionResult GetCompanyCollection(IEnumerable<Guid> ids)
     {
-        //create custom model binders to bind string to IEnumarable<Guid>
-        //create _service method to show collection by ids
-        //return collection
+        IEnumerable<CompanyDto> companyCollectionToReturn = _service.CompanyService.GetCompanyCollection(ids);
 
-        //make all validation inside service layer and create custom exceptions
-        return Ok(ids);
+        return Ok(companyCollectionToReturn);
     }
 
 
