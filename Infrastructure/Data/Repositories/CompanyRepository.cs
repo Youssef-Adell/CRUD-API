@@ -22,4 +22,7 @@ public class CompanyRepository : RepositoryBase<Company>, ICompanyRepository
 
     public void CreateCompany(Company company) => Create(company);
 
+    public IEnumerable<Company> GetCompanyCollection(IEnumerable<Guid> ids, bool trackChanges) =>
+        FindByCondition(c => ids.Contains(c.Id), trackChanges)
+        .ToList();
 }

@@ -37,4 +37,31 @@ public class CompaniesController : ControllerBase
 
         return CreatedAtRoute("CompanyById", new { id = companyToReturn.Id }, companyToReturn);
     }
+
+
+    [HttpGet("Collection/{ids}", Name = "GetCompanyCollectionByIds")]
+    public IActionResult GetCompanyCollection(IEnumerable<Guid> ids)
+    {
+        //create custom model binders to bind string to IEnumarable<Guid>
+        //create _service method to show collection by ids
+        //return collection
+
+        //make all validation inside service layer and create custom exceptions
+        return Ok(ids);
+    }
+
+
+    [HttpPost("Collection")]
+    public IActionResult CreateCompanyCollection([FromBody] IEnumerable<CompanyForCreationDto> companies)
+    {
+        //check if null
+        if (companies is null)
+            return BadRequest("IEnumerable<CompanyForCreationDto> object is null");
+
+        //call service
+        var createdCollection = _service.CompanyService.CreateCompanyCollection(companies);
+
+        //return created Collection
+        return CreatedAtRoute("GetCompanyCollectionByIds", new { ids = createdCollection.ids }, createdCollection.companies);
+    }
 }

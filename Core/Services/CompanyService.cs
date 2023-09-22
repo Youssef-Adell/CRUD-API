@@ -53,5 +53,21 @@ internal sealed class CompanyService : ICompanyService
         return companyToReturn;
     }
 
+    public (IEnumerable<CompanyDto> companies, string ids) CreateCompanyCollection(IEnumerable<CompanyForCreationDto> companyCollection)
+    {
+        //map DtoForCreation To entity
+        IEnumerable<Company> companyCollectionEntitiies = _mapper.Map<IEnumerable<Company>>(companyCollection);
 
+        //add entities to db
+        foreach (Company company in companyCollectionEntitiies)
+            _repository.Company.CreateCompany(company);
+
+        _repository.Save();
+
+        //map created entiies to Dto & concatenate all ids to return them
+        IEnumerable<CompanyDto> companyCollectionToReturn = _mapper.Map<IEnumerable<CompanyDto>>(companyCollectionEntitiies);
+        string ids = string.Join(",", companyCollectionEntitiies.Select(c => c.Id));
+
+        return (companyCollectionToReturn, ids);
+    }
 }
