@@ -72,7 +72,13 @@ internal sealed class CompanyService : ICompanyService
     }
     public IEnumerable<CompanyDto> GetCompanyCollection(IEnumerable<Guid> ids, bool trackChanges = false)
     {
+        if (ids is null)
+            throw new NullParameterBadRequestException(nameof(ids));
+
         IEnumerable<Company> companyCollection = _repository.Company.GetCompanyCollection(ids, trackChanges);
+
+        if (companyCollection.Count() != ids.Count())
+            throw new InvalidIdsParameterBadRequestException();
 
         IEnumerable<CompanyDto> companyCollectionToReturn = _mapper.Map<IEnumerable<CompanyDto>>(companyCollection);
 
