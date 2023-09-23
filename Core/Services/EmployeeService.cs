@@ -51,11 +51,11 @@ internal sealed class EmployeeService : IEmployeeService
         return employeeDto;
     }
 
-    public EmployeeDto CreateEmployeeForCompany(Guid companyId, EmployeeForCreationDto employeeToAdd, bool trackChanges = false)
+    public EmployeeDto CreateEmployeeForCompany(Guid companyId, EmployeeForCreationDto employeeToAdd)
     {
 
         //check if the company exist or not befoe add employee to it
-        Company company = _repository.Company.GetCompany(companyId, trackChanges);
+        Company company = _repository.Company.GetCompany(companyId, trackChanges: false);
 
         if (company is null)
             throw new CompanyNotFoundException(companyId);
