@@ -70,7 +70,7 @@ internal sealed class CompanyService : ICompanyService
 
         return (companyCollectionToReturn, ids);
     }
-    public IEnumerable<CompanyDto> GetCompanyCollection(IEnumerable<Guid> ids, bool trackChanges = false)
+    public IEnumerable<CompanyDto> GetCompanyCollection(IEnumerable<Guid> ids, bool trackChanges)
     {
         if (ids is null)
             throw new NullParameterBadRequestException(nameof(ids));

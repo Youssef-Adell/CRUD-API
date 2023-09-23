@@ -42,7 +42,7 @@ public class CompaniesController : ControllerBase
     [HttpGet("Collection/{ids}", Name = "GetCompanyCollectionByIds")]
     public IActionResult GetCompanyCollection(IEnumerable<Guid> ids)
     {
-        IEnumerable<CompanyDto> companyCollectionToReturn = _service.CompanyService.GetCompanyCollection(ids);
+        IEnumerable<CompanyDto> companyCollectionToReturn = _service.CompanyService.GetCompanyCollection(ids, trackChanges: false);
 
         return Ok(companyCollectionToReturn);
     }
