@@ -30,9 +30,6 @@ public class CompaniesController : ControllerBase
     [HttpPost]
     public IActionResult CreateCompany([FromBody] CompanyForCreationDto company)
     {
-        if (company == null)
-            return BadRequest("CompanyForCreationDto object is null");
-
         CompanyDto companyToReturn = _service.CompanyService.CreateCompany(company);
 
         return CreatedAtRoute("CompanyById", new { id = companyToReturn.Id }, companyToReturn);
@@ -51,10 +48,6 @@ public class CompaniesController : ControllerBase
     [HttpPost("Collection")]
     public IActionResult CreateCompanyCollection([FromBody] IEnumerable<CompanyForCreationDto> companies)
     {
-        //check if null
-        if (companies is null)
-            return BadRequest("IEnumerable<CompanyForCreationDto> object is null");
-
         //call service
         var createdCollection = _service.CompanyService.CreateCompanyCollection(companies);
 

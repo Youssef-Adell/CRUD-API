@@ -34,10 +34,6 @@ public class EmployeesController : ControllerBase
     [HttpPost]
     public IActionResult CreateEmployeeForCompany(Guid companyId, [FromBody] EmployeeForCreationDto employee)
     {
-        //check if not null
-        if (employee is null)
-            return BadRequest("EmployeeForCreationDto object is null");
-
         //call service 
         EmployeeDto createdEmployee = _service.EmployeeService.CreateEmployeeForCompany(companyId, employee);
 

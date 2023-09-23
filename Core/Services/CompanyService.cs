@@ -41,9 +41,12 @@ internal sealed class CompanyService : ICompanyService
         return companyDto;
     }
 
-    public CompanyDto CreateCompany(CompanyForCreationDto companyToAdd)
+    public CompanyDto CreateCompany(CompanyForCreationDto company)
     {
-        Company companyEntity = _mapper.Map<Company>(companyToAdd);
+        if (company is null)
+            throw new NullParameterBadRequestException(nameof(company));
+
+        Company companyEntity = _mapper.Map<Company>(company);
 
         _repository.Company.CreateCompany(companyEntity);
         _repository.Save();
@@ -55,6 +58,10 @@ internal sealed class CompanyService : ICompanyService
 
     public (IEnumerable<CompanyDto> companies, string ids) CreateCompanyCollection(IEnumerable<CompanyForCreationDto> companyCollection)
     {
+        //check if CompanyCollection isnt null
+        if (companyCollection is null)
+            throw new NullParameterBadRequestException(nameof(companyCollection));
+
         //map DtoForCreation To entity
         IEnumerable<Company> companyCollectionEntitiies = _mapper.Map<IEnumerable<Company>>(companyCollection);
 

@@ -51,8 +51,12 @@ internal sealed class EmployeeService : IEmployeeService
         return employeeDto;
     }
 
-    public EmployeeDto CreateEmployeeForCompany(Guid companyId, EmployeeForCreationDto employeeToAdd)
+    public EmployeeDto CreateEmployeeForCompany(Guid companyId, EmployeeForCreationDto employee)
     {
+        //check if not null
+        if (employee is null)
+            throw new NullParameterBadRequestException(nameof(employee));
+
 
         //check if the company exist or not befoe add employee to it
         Company company = _repository.Company.GetCompany(companyId, trackChanges: false);
@@ -61,7 +65,7 @@ internal sealed class EmployeeService : IEmployeeService
             throw new CompanyNotFoundException(companyId);
 
         //map employeeForCreationDto to employee Entity
-        Employee employeeEntity = _mapper.Map<Employee>(employeeToAdd);
+        Employee employeeEntity = _mapper.Map<Employee>(employee);
 
         //add employeeEntity to database
         _repository.Employee.CreateEmployeeForCompany(companyId, employeeEntity);

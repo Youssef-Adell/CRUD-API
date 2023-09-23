@@ -1,5 +1,5 @@
+internal_logs/
 bin/
 obj/
 .vscode/
-internal_logs/internallog.txt
 logs/
