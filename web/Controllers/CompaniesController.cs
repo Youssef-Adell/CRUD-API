@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using Core.Interfaces.IServices;
 using Core.DTOs;
+using Web.ModelBinders;
 
 namespace Web.Controllers;
 
@@ -37,7 +38,7 @@ public class CompaniesController : ControllerBase
 
 
     [HttpGet("Collection/{ids}", Name = "GetCompanyCollectionByIds")]
-    public IActionResult GetCompanyCollection(IEnumerable<Guid> ids)
+    public IActionResult GetCompanyCollection([ModelBinder(BinderType = typeof(IEnumerableOfGuidModelBinder))] IEnumerable<Guid> ids)
     {
         IEnumerable<CompanyDto> companyCollectionToReturn = _service.CompanyService.GetCompanyCollection(ids, trackChanges: false);
 
