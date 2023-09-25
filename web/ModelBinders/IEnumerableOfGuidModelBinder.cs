@@ -4,7 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Web.ModelBinders;
 
-public class IEnumerableOfGuidModelBinderModelBinder : IModelBinder
+public class IEnumerableOfGuidModelBinder : IModelBinder
 {
     public Task BindModelAsync(ModelBindingContext bindingContext)
     {
