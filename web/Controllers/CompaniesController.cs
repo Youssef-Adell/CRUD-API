@@ -38,7 +38,7 @@ public class CompaniesController : ControllerBase
 
 
     [HttpGet("Collection/{ids}", Name = "GetCompanyCollectionByIds")]
-    public IActionResult GetCompanyCollection([ModelBinder(BinderType = typeof(IEnumerableOfGuidModelBinder))] IEnumerable<Guid> ids)
+    public IActionResult GetCompanyCollection([ModelBinder(typeof(IEnumerableOfTModelBinder))] IEnumerable<Guid> ids)
     {
         IEnumerable<CompanyDto> companyCollectionToReturn = _service.CompanyService.GetCompanyCollection(ids, trackChanges: false);
 

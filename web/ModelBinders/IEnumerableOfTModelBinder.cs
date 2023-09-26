@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Web.ModelBinders;
 
-public class IEnumerableOfGuidModelBinder : IModelBinder
+public class IEnumerableOfTModelBinder : IModelBinder
 {
     public Task BindModelAsync(ModelBindingContext bindingContext)
     {
@@ -26,12 +27,19 @@ public class IEnumerableOfGuidModelBinder : IModelBinder
         }
 
         // Convert the ProvidedValue type to the needed model type
-        TypeConverter converter = TypeDescriptor.GetConverter(typeof(Guid));
+        var genericTypeInIEnumarable = bindingContext.ModelType.GenericTypeArguments[0];
 
-        IEnumerable<Guid> convertedValue = providedValue.Split(",", StringSplitOptions.TrimEntries)
-                                            .Select(idStr => (Guid)converter.ConvertFromString(idStr));
+        TypeConverter converter = TypeDescriptor.GetConverter(genericTypeInIEnumarable);
 
-        bindingContext.Result = ModelBindingResult.Success(convertedValue);
+        var convertedValueObjects = providedValue.Split(",", StringSplitOptions.TrimEntries)
+                                            .Select(idStr => converter.ConvertFromString(idStr))
+                                            .ToArray();
+
+        var convertedValueActualType = Array.CreateInstance(genericTypeInIEnumarable, convertedValueObjects.Length);
+        convertedValueObjects.CopyTo(convertedValueActualType, 0);
+
+
+        bindingContext.Result = ModelBindingResult.Success(convertedValueActualType);
         return Task.CompletedTask;
     }
 
