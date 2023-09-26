@@ -77,4 +77,23 @@ internal sealed class EmployeeService : IEmployeeService
         return employeeToReturn;
     }
 
+    public void DeleteEmployeeFromCompany(Guid companyId, Guid employeeId)
+    {
+        // ensure that the company with this id is exist
+        Company company = _repository.Company.GetCompany(companyId, trackChanges: false);
+
+        if (company is null)
+            throw new CompanyNotFoundException(companyId);
+
+
+        // ensure that there is an employee with this id working in the company with that id
+        Employee employee = _repository.Employee.GetEmployee(companyId, employeeId, trackChanges: false);
+
+        if (employee is null)
+            throw new EmployeeNotFoundException(employeeId);
+
+        // delete the employee
+        _repository.Employee.DeleteEmployee(employee);
+        _repository.Save();
+    }
 }
