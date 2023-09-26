@@ -48,4 +48,12 @@ public class EmployeesController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpPut("{id:Guid}")]
+    public IActionResult UpdateEmployeeForCompany(Guid companyId, Guid id, EmployeeForUpdateDto employeeForUpdate)
+    {
+        _service.EmployeeService.UpdateEmployeeForCompany(companyId, id, employeeForUpdate);
+
+        return NoContent();
+    }
 }

@@ -16,4 +16,10 @@ public class AutoMapperService : IMapperService
     {
         return _mapper.Map<TDestination>(source);
     }
+
+    public TDestination Map<TSource, TDestination>(TSource source, TDestination destination)
+    {
+        return _mapper.Map(source, destination);
+    }
+
 }
