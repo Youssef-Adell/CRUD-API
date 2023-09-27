@@ -1,4 +1,3 @@
-using Azure;
 using Core.DTOs;
 using Core.Interfaces.IServices;
 using Microsoft.AspNetCore.JsonPatch;
@@ -59,6 +58,10 @@ public class EmployeesController : ControllerBase
         return NoContent();
     }
 
+
+    // content-type of request should be: application/json-patch+json
+    // request body should contain array of operations [{"op":,"path":,"valuw":},]
+    [HttpPatch("{id:Guid}")]
     public IActionResult PartiallyUpdateEmployeeForCompany(Guid companyId, Guid id, JsonPatchDocument<EmployeeForUpdateDto> patchDoc)
     {
         if (patchDoc is null)

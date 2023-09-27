@@ -137,7 +137,7 @@ internal sealed class EmployeeService : IEmployeeService
         // Get EmployeeForUpdate Dto to applay patch to it
         EmployeeForUpdateDto employeeToPatch = _mapper.Map<EmployeeForUpdateDto>(employee);
 
-        return (employeeToPatch: employeeToPatch, employeeEntity: employee);
+        return (employeeToPatch, employee);
     }
 
     public void SaveEmployeeForPatch(EmployeeForUpdateDto employeeToPatch, Employee employeeEnitiy)
