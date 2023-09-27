@@ -1,5 +1,7 @@
+using Azure;
 using Core.DTOs;
 using Core.Interfaces.IServices;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers;
@@ -53,6 +55,20 @@ public class EmployeesController : ControllerBase
     public IActionResult UpdateEmployeeForCompany(Guid companyId, Guid id, EmployeeForUpdateDto employeeForUpdate)
     {
         _service.EmployeeService.UpdateEmployeeForCompany(companyId, id, employeeForUpdate);
+
+        return NoContent();
+    }
+
+    public IActionResult PartiallyUpdateEmployeeForCompany(Guid companyId, Guid id, JsonPatchDocument<EmployeeForUpdateDto> patchDoc)
+    {
+        if (patchDoc is null)
+            return BadRequest("patchDoc object is null");
+
+        var result = _service.EmployeeService.GetEmployeeForPatch(companyId, id);
+
+        patchDoc.ApplyTo(result.employeeToPatch);
+
+        _service.EmployeeService.SaveEmployeeForPatch(result.employeeToPatch, result.employeeEntity);
 
         return NoContent();
     }

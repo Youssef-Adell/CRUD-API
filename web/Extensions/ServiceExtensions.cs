@@ -8,11 +8,21 @@ using Infrastructure.Data.Repositories;
 using Infrastructure.Mapper;
 using NLog;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Extensions.Options;
 
 namespace Web.Extensions;
 
 public static class ServiceExtensions
 {
+    private static NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter()
+    {
+        return new ServiceCollection().AddLogging().AddMvc().AddNewtonsoftJson()
+        .Services.BuildServiceProvider()
+        .GetRequiredService<IOptions<MvcOptions>>().Value.InputFormatters
+        .OfType<NewtonsoftJsonPatchInputFormatter>().First();
+    }
+
     public static void AddWebServices(this IServiceCollection services)
     {
         services.Configure<ApiBehaviorOptions>(config =>
@@ -24,6 +34,7 @@ public static class ServiceExtensions
         {
             config.RespectBrowserAcceptHeader = true;
             config.ReturnHttpNotAcceptable = true;
+            config.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
         }
         ).AddXmlDataContractSerializerFormatters();
 
