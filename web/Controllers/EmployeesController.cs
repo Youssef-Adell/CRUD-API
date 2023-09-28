@@ -56,6 +56,9 @@ public class EmployeesController : ControllerBase
     [HttpPut("{id:Guid}")]
     public IActionResult UpdateEmployeeForCompany(Guid companyId, Guid id, EmployeeForUpdateDto employeeForUpdate)
     {
+        if (!ModelState.IsValid)
+            return UnprocessableEntity(ModelState);
+
         _service.EmployeeService.UpdateEmployeeForCompany(companyId, id, employeeForUpdate);
 
         return NoContent();
