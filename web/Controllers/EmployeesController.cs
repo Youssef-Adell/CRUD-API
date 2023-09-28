@@ -70,12 +70,12 @@ public class EmployeesController : ControllerBase
     [HttpPatch("{id:Guid}")]
     public IActionResult PartiallyUpdateEmployeeForCompany(Guid companyId, Guid id, JsonPatchDocument<EmployeeForUpdateDto> patchDoc)
     {
-        if (patchDoc is null)
-            return BadRequest("patchDoc object is null");
-
         var result = _service.EmployeeService.GetEmployeeForPatch(companyId, id);
 
-        patchDoc.ApplyTo(result.employeeToPatch);
+        patchDoc.ApplyTo(result.employeeToPatch, ModelState);
+
+        if (!ModelState.IsValid)
+            return UnprocessableEntity(ModelState);
 
         _service.EmployeeService.SaveEmployeeForPatch(result.employeeToPatch, result.employeeEntity);
 
