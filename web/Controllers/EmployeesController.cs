@@ -31,10 +31,13 @@ public class EmployeesController : ControllerBase
         return Ok(employee);
     }
 
-
     [HttpPost]
     public IActionResult CreateEmployeeForCompany(Guid companyId, [FromBody] EmployeeForCreationDto employee)
     {
+        //check if the data sent by client is valid or not
+        if (!ModelState.IsValid)
+            return UnprocessableEntity(ModelState);
+
         //call service 
         EmployeeDto createdEmployee = _service.EmployeeService.CreateEmployeeForCompany(companyId, employee);
 
