@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Core.Interfaces.IServices;
 using Core.DTOs;
 using Web.ModelBinders;
+using System.Collections.Generic;
 
 namespace Web.Controllers;
 
@@ -15,51 +16,51 @@ public class CompaniesController : ControllerBase
     public CompaniesController(IServiceManager service) => _service = service;
 
     [HttpGet]
-    public IActionResult GetAllCompanies()
+    public async Task<IActionResult> GetAllCompanies()
     {
-        var companies = _service.CompanyService.GetAllCompanies(trackChanges: false);
+        IEnumerable<CompanyDto> companies = await _service.CompanyService.GetAllCompaniesAsync(trackChanges: false);
         return Ok(companies);
     }
 
     [HttpGet("{id:Guid}", Name = "CompanyById")]
-    public IActionResult GetCompany(Guid id)
+    public async Task<IActionResult> GetCompany(Guid id)
     {
-        var company = _service.CompanyService.GetCompany(id, trackChanges: false);
+        CompanyDto company = await _service.CompanyService.GetCompanyAsync(id, trackChanges: false);
         return Ok(company);
     }
 
     [HttpPost]
-    public IActionResult CreateCompany([FromBody] CompanyForCreationDto company)
+    public async Task<IActionResult> CreateCompany([FromBody] CompanyForCreationDto company)
     {
-        CompanyDto companyToReturn = _service.CompanyService.CreateCompany(company);
+        CompanyDto companyToReturn = await _service.CompanyService.CreateCompanyAsync(company);
 
         return CreatedAtRoute("CompanyById", new { id = companyToReturn.Id }, companyToReturn);
     }
 
 
     [HttpGet("Collection/{ids}", Name = "GetCompanyCollectionByIds")]
-    public IActionResult GetCompanyCollection([ModelBinder(typeof(IEnumerableOfTModelBinder))] IEnumerable<Guid> ids)
+    public async Task<IActionResult> GetCompanyCollection([ModelBinder(typeof(IEnumerableOfTModelBinder))] IEnumerable<Guid> ids)
     {
-        IEnumerable<CompanyDto> companyCollectionToReturn = _service.CompanyService.GetCompanyCollection(ids, trackChanges: false);
+        IEnumerable<CompanyDto> companyCollectionToReturn = await _service.CompanyService.GetCompanyCollectionAsync(ids, trackChanges: false);
 
         return Ok(companyCollectionToReturn);
     }
 
 
     [HttpPost("Collection")]
-    public IActionResult CreateCompanyCollection([FromBody] IEnumerable<CompanyForCreationDto> companies)
+    public async Task<IActionResult> CreateCompanyCollection([FromBody] IEnumerable<CompanyForCreationDto> companies)
     {
         //call service
-        var createdCollection = _service.CompanyService.CreateCompanyCollection(companies);
+        (IEnumerable<CompanyDto> companies, string ids) createdCollection = await _service.CompanyService.CreateCompanyCollectionAsync(companies);
 
         //return created Collection
         return CreatedAtRoute("GetCompanyCollectionByIds", new { ids = createdCollection.ids }, createdCollection.companies);
     }
 
     [HttpDelete("{id:Guid}")]
-    public IActionResult DeleteCompany(Guid id)
+    public async Task<IActionResult> DeleteCompany(Guid id)
     {
-        _service.CompanyService.DeleteCompany(id);
+        await _service.CompanyService.DeleteCompanyAsync(id);
 
         return NoContent();
     }
