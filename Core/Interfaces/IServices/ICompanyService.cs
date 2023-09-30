@@ -4,11 +4,11 @@ namespace Core.Interfaces.IServices;
 
 public interface ICompanyService
 {
-    IEnumerable<CompanyDto> GetAllCompanies(bool trackChanges);
-    CompanyDto GetCompany(Guid companyId, bool trackChanges);
-    CompanyDto CreateCompany(CompanyForCreationDto company);
-    (IEnumerable<CompanyDto> companies, string ids) CreateCompanyCollection(IEnumerable<CompanyForCreationDto> companyCollection);
-    IEnumerable<CompanyDto> GetCompanyCollection(IEnumerable<Guid> ids, bool trackChanges);
-    void DeleteCompany(Guid companyId);
-    void UpdateCompany(Guid companyId, CompanyForUpdatenDto companyForUpdate);
+    Task<IEnumerable<CompanyDto>> GetAllCompaniesAsync(bool trackChanges);
+    Task<CompanyDto> GetCompanyAsync(Guid companyId, bool trackChanges);
+    Task<CompanyDto> CreateCompanyAsync(CompanyForCreationDto company);
+    Task<(IEnumerable<CompanyDto> companies, string ids)> CreateCompanyCollectionAsync(IEnumerable<CompanyForCreationDto> companyCollection);
+    Task<IEnumerable<CompanyDto>> GetCompanyCollectionAsync(IEnumerable<Guid> ids, bool trackChanges);
+    Task DeleteCompanyAsync(Guid companyId);
+    Task UpdateCompanyAsync(Guid companyId, CompanyForUpdatenDto companyForUpdate);
 }
