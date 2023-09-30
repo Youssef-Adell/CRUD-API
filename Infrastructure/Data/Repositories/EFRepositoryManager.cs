@@ -18,9 +18,9 @@ public class EFRepositoryManager : IRepositoryManager
 
     public IEmployeeRepository Employee => _EmployeeRepository.Value;
 
-    public void Save()
+    public async Task SaveAync()
     {
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
 }
