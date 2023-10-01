@@ -2,6 +2,7 @@ using Core.DTOs;
 using Core.Interfaces.IServices;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Web.ActionFilters;
 
 namespace Web.Controllers;
 
@@ -32,12 +33,9 @@ public class EmployeesController : ControllerBase
     }
 
     [HttpPost]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> CreateEmployeeForCompany(Guid companyId, [FromBody] EmployeeForCreationDto employee)
     {
-        //check if the data sent by client is valid or not
-        if (!ModelState.IsValid)
-            return UnprocessableEntity(ModelState);
-
         //call service 
         EmployeeDto createdEmployee = await _service.EmployeeService.CreateEmployeeForCompanyAsync(companyId, employee);
 
@@ -54,11 +52,9 @@ public class EmployeesController : ControllerBase
     }
 
     [HttpPut("{id:Guid}")]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> UpdateEmployeeForCompany(Guid companyId, Guid id, EmployeeForUpdateDto employeeForUpdate)
     {
-        if (!ModelState.IsValid)
-            return UnprocessableEntity(ModelState);
-
         await _service.EmployeeService.UpdateEmployeeForCompanyAsync(companyId, id, employeeForUpdate);
 
         return NoContent();
