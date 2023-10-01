@@ -64,4 +64,12 @@ public class CompaniesController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpPut("{id:Guid}")]
+    public async Task<IActionResult> UpdateCompany(Guid id, CompanyForUpdatenDto companyForUpdate)
+    {
+        await _service.CompanyService.UpdateCompanyAsync(id, companyForUpdate);
+
+        return NoContent();
+    }
 }
