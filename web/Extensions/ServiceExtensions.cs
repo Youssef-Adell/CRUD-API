@@ -10,6 +10,7 @@ using NLog;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Options;
+using Web.ActionFilters;
 
 namespace Web.Extensions;
 
@@ -55,6 +56,9 @@ public static class ServiceExtensions
         {
 
         });
+
+        // Filters
+        services.AddScoped<ValidationFilterAttribute>();
     }
 
     public static void AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
