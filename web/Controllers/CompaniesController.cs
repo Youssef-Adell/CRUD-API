@@ -4,6 +4,7 @@ using Core.Interfaces.IServices;
 using Core.DTOs;
 using Web.ModelBinders;
 using System.Collections.Generic;
+using Web.ActionFilters;
 
 namespace Web.Controllers;
 
@@ -30,6 +31,7 @@ public class CompaniesController : ControllerBase
     }
 
     [HttpPost]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> CreateCompany([FromBody] CompanyForCreationDto company)
     {
         CompanyDto companyToReturn = await _service.CompanyService.CreateCompanyAsync(company);
@@ -48,6 +50,7 @@ public class CompaniesController : ControllerBase
 
 
     [HttpPost("Collection")]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> CreateCompanyCollection([FromBody] IEnumerable<CompanyForCreationDto> companies)
     {
         //call service
@@ -66,6 +69,7 @@ public class CompaniesController : ControllerBase
     }
 
     [HttpPut("{id:Guid}")]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> UpdateCompany(Guid id, CompanyForUpdatenDto companyForUpdate)
     {
         await _service.CompanyService.UpdateCompanyAsync(id, companyForUpdate);

@@ -16,5 +16,5 @@ public abstract record CompanyForManipulationDto
     [MaxLength(30, ErrorMessage = "Maximum length for the Country is 30 characters.")]
     public string Country { get; init; }
 
-    public IEnumerable<EmployeeForCreationDto> Employees { get; init; }
+    public IEnumerable<EmployeeForCreationDto>? Employees { get; init; }
 }
