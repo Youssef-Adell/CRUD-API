@@ -10,8 +10,17 @@ internal sealed class CompanyService : ICompanyService
 {
     private readonly IRepositoryManager _repository;
     private readonly ILoggerService _logger;
-
     private readonly IMapperService _mapper;
+
+    private async Task<Company> GetCompanyAndCheckIfItExists(Guid companyId, bool trackChanges)
+    {
+        Company company = await _repository.Company.GetCompanyAsync(companyId, trackChanges);
+
+        if (company is null)
+            throw new CompanyNotFoundException(companyId);
+
+        return company;
+    }
 
     public CompanyService(IRepositoryManager repository, ILoggerService logger, IMapperService mapper)
     {
@@ -31,10 +40,7 @@ internal sealed class CompanyService : ICompanyService
 
     public async Task<CompanyDto> GetCompanyAsync(Guid companyId, bool trackChanges)
     {
-        Company company = await _repository.Company.GetCompanyAsync(companyId, trackChanges);
-
-        if (company is null)
-            throw new CompanyNotFoundException(companyId);
+        Company company = await GetCompanyAndCheckIfItExists(companyId, trackChanges);
 
         CompanyDto companyDto = _mapper.Map<CompanyDto>(company);
 
@@ -94,10 +100,7 @@ internal sealed class CompanyService : ICompanyService
 
     public async Task DeleteCompanyAsync(Guid companyId)
     {
-        Company company = await _repository.Company.GetCompanyAsync(companyId, trackChanges: false);
-
-        if (company is null)
-            throw new CompanyNotFoundException(companyId);
+        Company company = await GetCompanyAndCheckIfItExists(companyId, trackChanges: false);
 
         _repository.Company.DeleteCompany(company);
         await _repository.SaveAync();
@@ -108,10 +111,7 @@ internal sealed class CompanyService : ICompanyService
         if (companyForUpdate is null)
             throw new NullParameterBadRequestException(nameof(companyForUpdate));
 
-        Company company = await _repository.Company.GetCompanyAsync(companyId, trackChanges: true);
-
-        if (company is null)
-            throw new CompanyNotFoundException(companyId);
+        Company company = await GetCompanyAndCheckIfItExists(companyId, trackChanges: true);
 
         // update the company
         _mapper.Map(companyForUpdate, company);
