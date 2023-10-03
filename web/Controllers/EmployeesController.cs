@@ -17,9 +17,9 @@ public class EmployeesController : ControllerBase
 
 
     [HttpGet]
-    public async Task<IActionResult> GetEmployeesForCompany(Guid companyId)
+    public async Task<IActionResult> GetEmployeesForCompany(Guid companyId, [FromQuery] EmployeeParameters employeeParameters)
     {
-        IEnumerable<EmployeeDto> employees = await _service.EmployeeService.GetEmployeesAsync(companyId, trackChanges: false);
+        IEnumerable<EmployeeDto> employees = await _service.EmployeeService.GetEmployeesAsync(companyId, employeeParameters, trackChanges: false);
 
         return Ok(employees);
     }
