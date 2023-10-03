@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Core.DTOs;
 using Core.Interfaces.IServices;
 using Microsoft.AspNetCore.JsonPatch;
@@ -19,9 +20,11 @@ public class EmployeesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetEmployeesForCompany(Guid companyId, [FromQuery] EmployeeParameters employeeParameters)
     {
-        IEnumerable<EmployeeDto> employees = await _service.EmployeeService.GetEmployeesAsync(companyId, employeeParameters, trackChanges: false);
+        PagedList<EmployeeDto> pagedResult = await _service.EmployeeService.GetEmployeesAsync(companyId, employeeParameters, trackChanges: false);
 
-        return Ok(employees);
+        Response.Headers.Add("Pagination-Metadata", JsonSerializer.Serialize(pagedResult.Metadata));
+
+        return Ok(pagedResult);
     }
 
     [HttpGet("{id:Guid}", Name = "GetEmployeeForCompany")]
