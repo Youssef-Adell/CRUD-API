@@ -44,10 +44,10 @@ public static class ServiceExtensions
         {
             options.AddPolicy("CorsPolicy", builder =>
             {
-                builder.AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .WithExposedHeaders("Pagination-Metadata");
+                builder.AllowAnyOrigin() //allow any requests from any origin
+                .AllowAnyMethod()        //allow origin to send any http request
+                .AllowAnyHeader()        //allow origin to add any header to request
+                .WithExposedHeaders("Pagination-Metadata"); //make origin able to access this header and read it
             }
             );
         });
