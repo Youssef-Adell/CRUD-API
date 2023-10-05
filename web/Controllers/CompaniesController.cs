@@ -5,6 +5,7 @@ using Core.DTOs;
 using Web.ModelBinders;
 using System.Collections.Generic;
 using Web.ActionFilters;
+using System.Text.Json;
 
 namespace Web.Controllers;
 
@@ -17,10 +18,13 @@ public class CompaniesController : ControllerBase
     public CompaniesController(IServiceManager service) => _service = service;
 
     [HttpGet]
-    public async Task<IActionResult> GetAllCompanies()
+    public async Task<IActionResult> GetAllCompanies([FromQuery] CompanyParameters companyParameters)
     {
-        IEnumerable<CompanyDto> companies = await _service.CompanyService.GetAllCompaniesAsync(trackChanges: false);
-        return Ok(companies);
+        PagedList<CompanyDto> pagedResult = await _service.CompanyService.GetAllCompaniesAsync(companyParameters, trackChanges: false);
+
+        Response.Headers.Add("Pagination-Metadata", JsonSerializer.Serialize(pagedResult.Metadata));
+
+        return Ok(pagedResult);
     }
 
     [HttpGet("{id:Guid}", Name = "CompanyById")]

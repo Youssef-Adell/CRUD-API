@@ -29,13 +29,13 @@ internal sealed class CompanyService : ICompanyService
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<CompanyDto>> GetAllCompaniesAsync(bool trackChanges)
+    public async Task<PagedList<CompanyDto>> GetAllCompaniesAsync(CompanyParameters companyParameters, bool trackChanges)
     {
-        IEnumerable<Company> compaines = await _repository.Company.GetAllCompaniesAsync(trackChanges);
+        PagedList<Company> compainesPagedList = await _repository.Company.GetAllCompaniesAsync(companyParameters, trackChanges);
 
-        IEnumerable<CompanyDto> compainesDto = _mapper.Map<IEnumerable<CompanyDto>>(compaines);
+        IEnumerable<CompanyDto> compainesDto = _mapper.Map<IEnumerable<CompanyDto>>(compainesPagedList);
 
-        return compainesDto;
+        return new PagedList<CompanyDto>(compainesDto, compainesPagedList.Metadata);
     }
 
     public async Task<CompanyDto> GetCompanyAsync(Guid companyId, bool trackChanges)
