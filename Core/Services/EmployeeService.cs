@@ -39,8 +39,8 @@ internal sealed class EmployeeService : IEmployeeService
 
     public async Task<PagedList<EmployeeDto>> GetEmployeesAsync(Guid companyId, EmployeeParameters employeeParameters, bool trackChanges)
     {
-        if (!employeeParameters.ValidAgeRange)
-            throw new MaxAgeRangeBadRequestException();
+        // if (!employeeParameters.ValidAgeRange)
+        //     throw new MaxAgeRangeBadRequestException();
 
         await CheckIfCompanyExists(companyId);
 

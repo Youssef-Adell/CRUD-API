@@ -20,6 +20,9 @@ public class EmployeesController : ControllerBase
     [HttpGet] // we have to put [FromQuery] beside EmployeeParameters to change its default binding source from requestBody to QueryString 
     public async Task<IActionResult> GetEmployeesForCompany(Guid companyId, [FromQuery] EmployeeParameters employeeParameters)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         PagedList<EmployeeDto> pagedResult = await _service.EmployeeService.GetEmployeesAsync(companyId, employeeParameters, trackChanges: false);
 
         Response.Headers.Add("Pagination-Metadata", JsonSerializer.Serialize(pagedResult.Metadata));
