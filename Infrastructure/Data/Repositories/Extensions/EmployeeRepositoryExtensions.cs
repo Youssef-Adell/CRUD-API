@@ -14,4 +14,13 @@ public static class EmployeeRepositoryExtensions
                 .Take(pageSize);
     }
 
+    public static IQueryable<Employee> Search(this IQueryable<Employee> employees, string? searchTerm)
+    {
+        if (searchTerm is null)
+            return employees;
+
+        searchTerm = searchTerm.Trim().ToLower();
+
+        return employees.Where(e => e.Name.ToLower().Contains(searchTerm));
+    }
 }

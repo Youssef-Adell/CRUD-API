@@ -8,8 +8,8 @@ public class EmployeeParameters : RequestParameters, IValidatableObject
     // if consumer entered negative number in the query string the value will be 0 instead
     public uint MinAge { get; set; } = 0;
     public uint MaxAge { get; set; } = int.MaxValue;
-
     // public bool ValidAgeRange => MaxAge > MinAge;
+    public string? SearchTerm { get; set; }
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
