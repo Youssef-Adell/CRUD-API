@@ -1,4 +1,5 @@
 using Core.Entities;
+using Infrastructure.Data.Repositories.Extensions;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
 using System.Text;
@@ -32,41 +33,12 @@ public static class EmployeeRepositoryExtensions
         if (string.IsNullOrWhiteSpace(orderByQueryString))
             return employees.OrderBy(e => e.Name);
 
-        // orderByQueryString consist of "Property dirction, Property direction" ex: "name, age desc" and direction is optional
-        string[] orderByParams = orderByQueryString.Trim().Split(',');
+        string sortingQuery = UtilityExtensions.CreateSortingQuery<Employee>(orderByQueryString);
 
-        // get employee properties to use it for ensuring that the properties enterd in orderByQueryString are exist and valid
-        PropertyInfo[] employeeProperties = typeof(Employee).GetProperties(BindingFlags.Instance | BindingFlags.Public);
-
-        StringBuilder queryBuilder = new StringBuilder();
-
-        // loop on all enterd properties and add the valid ones to queryBulder
-        foreach (string param in orderByParams)
-        {
-            if (string.IsNullOrWhiteSpace(param))
-                continue;
-
-            // get property name from param which is like "age desc"
-            string enterdPropertyName = param.Trim().Split(" ")[0];
-
-            bool employeeHasTheEnterdProperty = employeeProperties.Any(
-                p => p.Name.Equals(enterdPropertyName, StringComparison.InvariantCultureIgnoreCase)
-            );
-
-            if (!employeeHasTheEnterdProperty)
-                continue;
-
-            string sortingDirection = param.EndsWith(" desc") ? "descending" : "ascending";
-
-            queryBuilder.Append($"{enterdPropertyName} {sortingDirection},");
-        }
-
-        string query = queryBuilder.ToString().TrimEnd(',', ' ');
-
-        if (String.IsNullOrWhiteSpace(query))
+        if (String.IsNullOrWhiteSpace(sortingQuery))
             return employees.OrderBy(e => e.Name);
 
         // this OrderBy is from Linq.Dynamic nuget package which takes string like this "age asc, name desc" to order by it
-        return employees.OrderBy(query);
+        return employees.OrderBy(sortingQuery);
     }
 }
