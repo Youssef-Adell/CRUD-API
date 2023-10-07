@@ -18,7 +18,7 @@ public class EmployeeRepository : RepositoryBase<Employee>, IEmployeeRepository
             .Search(employeeParameters.SearchTerm);
 
         List<Employee> employees = await query
-            .OrderBy(e => e.Name)
+            .Sort(employeeParameters.OrderBy)
             .Paging(employeeParameters.PageNumber, employeeParameters.PageSize)
             .ToListAsync();
 

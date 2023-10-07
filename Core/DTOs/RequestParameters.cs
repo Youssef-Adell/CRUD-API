@@ -18,7 +18,6 @@ public abstract class RequestParameters
                 _pageNumber = value;
         }
     }
-
     public int PageSize
     {
         get
@@ -31,4 +30,5 @@ public abstract class RequestParameters
                 _pageSize = (value > maxPageSize) ? maxPageSize : value;
         }
     }
+    public string OrderBy { get; set; }
 }
