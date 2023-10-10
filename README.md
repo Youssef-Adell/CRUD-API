@@ -13,9 +13,11 @@ This is a Simple CRUD API, there are no business logic or any heavy manipulation
 - Repository & Unit-of-work design patterns
 - Clean Architecture to seperate the core business logic from the infrastructure dependencies
 
+ 
 - CORS to restrict API resources to be accessed from another domain
 - DTOs to decouble the reques/response represention from the actual entities
 - Content negotiation to make the API able to support different formats(JSON, XML)
+
 
 - ORMs such as EF Core to map our Entities to SQL tables
 - DBMS such as SQL Server
