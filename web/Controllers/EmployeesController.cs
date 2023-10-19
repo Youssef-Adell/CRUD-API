@@ -16,7 +16,7 @@ public class EmployeesController : ControllerBase
     public EmployeesController(IServiceManager service) =>
         _service = service;
 
-
+    [HttpHead]
     [HttpGet] // we have to put [FromQuery] beside EmployeeParameters to change its default binding source from requestBody to QueryString 
     public async Task<IActionResult> GetEmployeesForCompany(Guid companyId, [FromQuery] EmployeeParameters employeeParameters)
     {
