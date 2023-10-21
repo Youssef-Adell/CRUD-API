@@ -36,6 +36,7 @@ public static class ServiceExtensions
             config.RespectBrowserAcceptHeader = true;
             config.ReturnHttpNotAcceptable = true;
             config.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
+            config.CacheProfiles.Add("MyCachProfile", new CacheProfile() { Duration=120});
         }
         ).AddXmlDataContractSerializerFormatters();
 
