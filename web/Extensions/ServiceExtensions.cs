@@ -60,6 +60,9 @@ public static class ServiceExtensions
 
         // Filters
         services.AddScoped<ValidationFilterAttribute>();
+
+        // Respnse Cache
+        services.AddResponseCaching();
     }
 
     public static void AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)

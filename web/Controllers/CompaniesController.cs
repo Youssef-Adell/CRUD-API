@@ -28,6 +28,7 @@ public class CompaniesController : ControllerBase
     }
 
     [HttpGet("{id:Guid}", Name = "CompanyById")]
+    [ResponseCache(Duration = 65)]
     public async Task<IActionResult> GetCompany(Guid id)
     {
         CompanyDto company = await _service.CompanyService.GetCompanyAsync(id, trackChanges: false);

@@ -30,6 +30,8 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 
 app.UseCors("CorsPolicy");
 
+app.UseResponseCaching();
+
 app.UseAuthorization();
 
 app.MapControllers();
