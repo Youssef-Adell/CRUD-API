@@ -11,7 +11,8 @@ namespace Web.Controllers;
 
 [ApiController]
 [Route("api/Companies")]
-[ResponseCache(CacheProfileName = "MyCachProfile")]
+//we dont need [ResponseCache] because UseHttpCacheHeaders() middleware in Marvin.Cache.Headers library adds all required caching headers
+//[ResponseCache(CacheProfileName = "MyCachProfile")]
 public class CompaniesController : ControllerBase
 {
     private readonly IServiceManager _service;
@@ -29,7 +30,7 @@ public class CompaniesController : ControllerBase
     }
 
     [HttpGet("{id:Guid}", Name = "CompanyById")]
-    [ResponseCache(Duration = 60)]
+    //[ResponseCache(Duration = 60)]
     public async Task<IActionResult> GetCompany(Guid id)
     {
         CompanyDto company = await _service.CompanyService.GetCompanyAsync(id, trackChanges: false);

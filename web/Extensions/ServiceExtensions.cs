@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Options;
 using Web.ActionFilters;
+using Marvin.Cache.Headers;
 
 namespace Web.Extensions;
 
@@ -36,7 +37,7 @@ public static class ServiceExtensions
             config.RespectBrowserAcceptHeader = true;
             config.ReturnHttpNotAcceptable = true;
             config.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
-            config.CacheProfiles.Add("MyCachProfile", new CacheProfile() { Duration=120});
+            //config.CacheProfiles.Add("MyCachProfile", new CacheProfile() { Duration = 120 });
         }
         ).AddXmlDataContractSerializerFormatters();
 
@@ -64,6 +65,17 @@ public static class ServiceExtensions
 
         // Respnse Cache
         services.AddResponseCaching();
+        services.AddHttpCacheHeaders(
+            expirationOptions =>
+            {
+                expirationOptions.MaxAge = 120;
+                expirationOptions.CacheLocation = CacheLocation.Public;
+            },
+            validationOptions =>
+            {
+                validationOptions.MustRevalidate = true;
+            }
+        );
     }
 
     public static void AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
